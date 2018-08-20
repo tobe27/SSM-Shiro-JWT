@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="dao.UserMapper">
+
+    <!--添加用户 -->
+    <insert id="saveUser"  parameterType="model.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into user (name, password)
+        values(#{name},#{password})
+    </insert>
+
+    <!-- 删除用户 -->
+    <delete id="deleteUserById" parameterType="model.User">
+        delete from  user  where id = #{id}
+    </delete>
+
+    <!--编辑学员-->
+    <update id="updateUser" parameterType="model.User" >
+        update user
+        set name = #{name},password = #{password}
+        where id = #{id}
+    </update>
+
+    <!-- 查询用户by id-->
+    <select id="getUserById" parameterType="model.User" resultType="model.User">
+        select * from user where  id = #{id}
+    </select>
+
+    <!-- 查询用户by name-->
+    <select id="getUserByName" parameterType="model.User" resultType="model.User">
+        select * from user where  name = #{name}
+    </select>
+
+</mapper>
